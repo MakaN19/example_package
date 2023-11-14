@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools >= 61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["dependencies", "version"]
+name = "simple_connectors"
+description = "Python package with simple connectors"
+
+[tool.setuptools.packages.find]
+include = ["*"]
+namespaces = false
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+version = {attr = "simple_connectors.__version__"}

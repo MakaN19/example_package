@@ -1,0 +1,25 @@
+branches:
+  only:
+    - master
+language: python
+
+env:
+  global:
+    # AWS_ACCESS_KEY_ID
+    - secure: XXX
+    # AWS_SECRET_ACCESS_KEY
+    - secure: XXX
+
+jobs:
+  include:
+    - stage: Test
+      if: type = pull_request
+      script:
+        - docker build -t simple_connectors simple_connectors -f Dockerfile.test && \
+          docker run simple_connectors sh -c "pytest ./tests"
+    - stage: Deploy
+      if: type != pull_request
+      before_script:
+        - . configure_aws_cli.sh
+      script:
+        - . build_package.sh

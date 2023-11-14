@@ -1,0 +1,10 @@
+FROM jupyter/pyspark-notebook:python-3.9
+
+WORKDIR ./
+
+ADD requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt && pip install pandas==1.1.5 && pip install pyspark==3.4.0
+COPY ./ ./
+
+
+CMD ['./tests']

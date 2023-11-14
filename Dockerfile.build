@@ -1,0 +1,8 @@
+FROM python:3.9.15 as base
+WORKDIR ./
+RUN pip install setuptools==60.10.0  wheel==0.37.1 build==0.10.0
+COPY ./ ./
+RUN python3 -m build --wheel
+
+FROM scratch AS export
+COPY --from=base dist/*.whl .
